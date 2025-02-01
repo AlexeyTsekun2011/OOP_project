@@ -1,5 +1,3 @@
-# from random import randint, random
-# from time import sleep, time СПРОСИТЬ
 import time
 import random
 
@@ -7,7 +5,7 @@ import random
 # Класс отвечающий за создание поля
 class Field:
     def __init__(self, size):
-        self.size = size  # Спросить
+        self.size = size
         self.tiger = Tiger()
         self.bunnies = [Bunny(), Bunny()]  # два bunny в списке т.к. по условию их два
 
@@ -71,7 +69,7 @@ class Tiger:
         if self.coords[1] > 4:  # постановка границ поля №4
             self.coords[1] = 4
         for bunny in bunnies:
-            if abs(self.coords[0] - bunny.coords[0]) <= 0 and abs(self.coords[1] - bunny.coords[1]) <= 0:
+            if abs(self.coords[0] - bunny.coords[0]) <= 1 and abs(self.coords[1] - bunny.coords[1]) <= 1:
                 self.state = "Атаковать добычу"
                 self.bunny = bunny
                 break
@@ -79,8 +77,10 @@ class Tiger:
     def attack_bunnies(self):
         if random.randint(0, 1):
             self.bunny.alive = False
+            print("Успешная атака")
             self.state = "Бежать домой"
         else:
+            print("Неуспешная атака")
             self.state = "Выследить добычу"
 
     def go_home(self):  # состояние волка,
@@ -92,6 +92,7 @@ class Tiger:
 if __name__ == "__main__":
     field = Field(5)  # Величина поля, в аргументе число которое будет в обеих осях
     field.draw()
+    print("Начало симуляции")
     while True:
         field.update()  # обновления поля игры из-за постоянного перемещения зайца
         field.draw()
